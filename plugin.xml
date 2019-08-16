@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-zip-archive" version="1.0.0">
+    <name>Zip archive</name>
+    <description>Cordova zip archive plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,zip,archive,plugin,native,android,ios</keywords>
+    <repo>https://github.com/kitolog/cordova-plugin-zip-archive</repo>
+    <issue>https://github.com/kitolog/cordova-plugin-zip-archive</issue>
+
+    <engines>
+        <engine name="cordova-android" version=">=3.6.0"/><!-- Requires CordovaPlugin.preferences -->
+        <engine name="cordova-ios" version=">=4.0.0"/>
+    </engines>
+
+    <js-module src="www/ziparchive.js" name="ZipArchive">
+        <clobbers target="window.zipArchive"/>
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ZipArchive">
+                <param name="android-package" value="com.hqsoftwarelab.ziparchive.ZipArchivePlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/ZipArchiveAdapter.java" target-dir="src/com/hqsoftwarelab/ziparchive"/>
+        <source-file src="src/android/ZipArchiveAdapterImpl.java" target-dir="src/com/hqsoftwarelab/ziparchive"/>
+        <source-file src="src/android/ZipArchivePlugin.java" target-dir="src/com/hqsoftwarelab/ziparchive"/>
+        <source-file src="src/android/Consumer.java" target-dir="src/com/hqsoftwarelab/ziparchive"/>
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ZipArchive">
+                <param name="ios-package" value="ZipArchivePlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <framework src="SSZipArchive" type="podspec" spec="~> 2.0.0" />
+
+        <header-file src="src/ios/ZipArchiveAdapter.h"/>
+        <source-file src="src/ios/ZipArchiveAdapter.m"/>
+        <source-file src="src/ios/ZipArchivePlugin.h"/>
+        <source-file src="src/ios/ZipArchivePlugin.m"/>
+    </platform>
+</plugin>
