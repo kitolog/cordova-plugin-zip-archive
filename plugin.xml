@@ -18,7 +18,7 @@
   under the License.
 -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-zip-archive" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-archive-zip" version="1.0.0">
     <name>Zip archive</name>
     <description>Cordova zip archive plugin</description>
     <license>Apache 2.0</license>

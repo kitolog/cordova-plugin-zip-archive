@@ -1,9 +1,9 @@
-cordova-plugin-zip-archive
+cordova-plugin-archive-zip
 ============================
 Cordova plugin to create zip archive 
 
 ### Installation
-cordova plugin add cordova-plugin-zip-archive
+cordova plugin add cordova-plugin-archive-zip
 
 // you may also install directly from this repo
 cordova plugin add https://github.com/kitolog/cordova-plugin-zip-archive

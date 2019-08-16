@@ -1,10 +1,10 @@
 {
-  "name": "cordova-plugin-zip-archive",
+  "name": "cordova-plugin-archive-zip",
   "version": "1.0.0",
   "description": "Cordova Zip Archive Plugin",
   "types": "./types/index.d.ts",
   "cordova": {
-    "id": "cordova-plugin-zip-archive",
+    "id": "cordova-plugin-archive-zip",
     "platforms": [
       "android",
       "ios"
