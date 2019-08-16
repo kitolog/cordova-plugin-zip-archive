@@ -1,10 +1,10 @@
 {
-  "name": "cordova-plugin-zip-compression",
+  "name": "cordova-plugin-zip-archive",
   "version": "1.0.0",
-  "description": "Cordova Zip Plugin",
+  "description": "Cordova Zip Archive Plugin",
   "types": "./types/index.d.ts",
   "cordova": {
-    "id": "cordova-plugin-zip-compression",
+    "id": "cordova-plugin-zip-archive",
     "platforms": [
       "android",
       "ios"
@@ -12,23 +12,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kitolog/cordova-plugin-zip-compression"
+    "url": "https://github.com/kitolog/cordova-plugin-zip-archive"
   },
   "bugs": {
-    "url": "https://github.com/kitolog/cordova-plugin-zip-compression"
+    "url": "https://github.com/kitolog/cordova-plugin-zip-archive"
   },
   "keywords": [
     "cordova",
     "zip",
-    "archhive",
-    "native",
-    "native timer",
-    "ios timer",
-    "android timer",
-    "cordova timer",
-    "android interval",
-    "ios interval",
-    "cordova interval",
+    "archive",
+    "ios zip",
+    "android zip",
+    "cordova zip",
+    "android archive",
+    "ios archive",
+    "cordova archive",
     "cordova-android",
     "cordova-ios"
   ],
