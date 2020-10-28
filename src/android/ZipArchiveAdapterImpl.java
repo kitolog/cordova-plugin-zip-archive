@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+
 public class ZipArchiveAdapterImpl implements ZipArchiveAdapter {
 
     private Consumer<String> zipEventHandler;
@@ -49,40 +53,58 @@ public class ZipArchiveAdapterImpl implements ZipArchiveAdapter {
     private static int BUFFER_SIZE = 6 * 1024;
 
     @Override
-    public void zip(String zipFile, ArrayList<String> filesList) throws IOException {
+    public void zip(String zipFilePath, ArrayList<String> filesList, float maxSize) throws IOException {
 
-        FileOutputStream fileOutputStream = null;
-        ZipOutputStream zipOutputStream = null;
-        FileInputStream fileInputStream = null;
         if (filesList.isEmpty())
             invokeExceptionHandler("No files found");
         try {
 
-            zipFile = zipFile.replace("file:///", "/");
-
-            File file = new File(zipFile);
-            if (!file.exists()) {
-                file.createNewFile();
+            zipFilePath = zipFilePath.replace("file:///", "/");
+            File file = new File(zipFilePath);
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    System.out.println("Zip file DELETED :" + zipFilePath);
+                } else {
+                    System.out.println("Zip file not deleted :" + zipFilePath);
+                }
+            } else {
+                System.out.println("Zip file not exists :" + zipFilePath);
             }
-            fileOutputStream = new FileOutputStream(file, false);
-            zipOutputStream = new ZipOutputStream(fileOutputStream);
+
+            File parentDir = file.getParentFile();
+            if (parentDir.exists() && parentDir.isDirectory()) {
+                File[] dirFiles = parentDir.listFiles();
+                if ((dirFiles != null) && (dirFiles.length > 0)) {
+                    System.out.println("Zip file parent dir files count :" + dirFiles.length);
+                    for (int i = 0; i < dirFiles.length; i++) {
+                        String fileName = dirFiles[i].getName();
+                        if (dirFiles[i].isFile() && fileName.matches(".*\\.z.*")) {
+                            System.out.println("Zip delete old chunks : " + fileName);
+                            if (dirFiles[i].delete()) {
+                                System.out.println("Zip file chunk DELETED :" + fileName);
+                            } else {
+                                System.out.println("Zip file chunk not deleted :" + fileName);
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+
+            ArrayList<File> preparedFilesList = new ArrayList<File>();
             for (String filePath : filesList) {
                 filePath = filePath.replace("file:///", "/");
-                fileInputStream = new FileInputStream(filePath);
-                ZipEntry zipEntry = new ZipEntry(filePath.substring(filePath.lastIndexOf("/") + 1));
-                zipOutputStream.putNextEntry(zipEntry);
-                byte[] tmp = new byte[BUFFER_SIZE];
-                int size = 0;
-                while ((size = fileInputStream.read(tmp)) != -1) {
-                    zipOutputStream.write(tmp, 0, size);
-                }
-                zipOutputStream.flush();
-                fileInputStream.close();
+                preparedFilesList.add(new File(filePath));
             }
-            zipOutputStream.close();
-            fileOutputStream.close();
-            invokeZipEventHandler(zipFile);
-        } catch (FileNotFoundException e) {
+
+            int fileSize = Math.round(maxSize * 1024 * 1024);
+            ZipFile zipFile = new ZipFile(file);
+            zipFile.createSplitZipFile(preparedFilesList, new ZipParameters(), true, fileSize); // using 10MB in this example
+            invokeZipEventHandler(zipFilePath);
+        } catch (ZipException e) {
+            e.printStackTrace();
             invokeExceptionHandler(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();

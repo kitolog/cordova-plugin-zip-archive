@@ -48,15 +48,23 @@ Syntax sugar for the event handlers (onTick, onStop, onError)
 eventName: `error` 
 
 ### Methods
-#### `zip(path, files, onSuccess?, onError?): void`
+#### `zip(path, files, options, onSuccess?, onError?): void`
 Establishes connection with the remote host.
 
 | parameter   | type          | description |
 | ----------- |-----------------------------|--------------|
 | `path`     | `string`                    | zip archive path | |
 | `files`  | `string array`                    | path to files |
+| `options`  | `options object or null`                    | path to files |
 | `onSuccess` | `() => void`                | Success callback - called after archive was created. (optional)|
 | `onError`   | `(message: string) => void` | Error callback - called when some error occurs during creating an archive. (optional)|
 
+#### Options:
+| parameter   | type          | description |
+| ----------- |-----------------------------|--------------|
+| `maxSize`      | `float`                | File size, in Mb. Default 0 - no max size |
+
 ## What's new
  - 1.0.0 - initial code
+ - 1.0.1 - cleared zip instances
+ - 2.0.0 - added max file size and zip parts support, updated SSZipArchive version 

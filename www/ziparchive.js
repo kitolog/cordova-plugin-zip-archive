@@ -67,7 +67,7 @@ function ZipArchive() {
     };
 }
 
-ZipArchive.prototype.zip = function (path, files, success, error) {
+ZipArchive.prototype.zip = function (path, files, options, success, error) {
     success = success || function () {
     };
     error = error || function () {
@@ -114,6 +114,13 @@ ZipArchive.prototype.zip = function (path, files, success, error) {
         }
     }
 
+    var maxFileSize = 0;
+    if (options) {
+        if (options.maxSize && !isNaN(options.maxSize)) {
+            maxFileSize = options.maxSize;
+        }
+    }
+
     _that._state = ZipArchive.State.STARTING;
 
     exec(
@@ -131,7 +138,8 @@ ZipArchive.prototype.zip = function (path, files, success, error) {
         [
             this.timerKey,
             path,
-            files
+            files,
+            maxFileSize
         ]);
 };
 
@@ -173,8 +181,7 @@ ZipArchive.prototype.checkState = function (requiredState, errorCallback) {
             errorCallback("Invalid operation for this timer state: " + ZipArchive.State[state]);
         });
         return false;
-    }
-    else {
+    } else {
         return true;
     }
 };

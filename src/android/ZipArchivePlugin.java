@@ -51,6 +51,7 @@ public class ZipArchivePlugin extends CordovaPlugin {
         String adapterKey = args.getString(0);
         String zipFile = args.getString(1);
         JSONArray jsonArray = args.getJSONArray(2);
+        int maxSize = args.getInt(3);
         ArrayList<String> filesArray = new ArrayList<String>();
         for (int i = 0, count = jsonArray.length(); i < count; i++) {
             try {
@@ -68,7 +69,7 @@ public class ZipArchivePlugin extends CordovaPlugin {
         zipArchiveAdapter.setErrorEventHandler(new ErrorEventHandler(adapterKey));
         zipArchiveAdapter.setZipEventHandler(new ZipEventHandler(adapterKey, zipArchiveAdapter, callbackContext));
         try {
-            zipArchiveAdapter.zip(zipFile, filesArray);
+            zipArchiveAdapter.zip(zipFile, filesArray, maxSize);
         } catch (IOException e) {
             e.printStackTrace();
         }

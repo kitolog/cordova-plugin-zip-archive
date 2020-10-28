@@ -21,7 +21,7 @@
 @public
 }
 
-- (void)zip:(NSString *)path files:(NSArray<NSString *> *)files;
+- (void)zip:(NSString *)path files:(NSArray<NSString *> *)files maxSize:(float)maxSize;
 - (void)stop;
 
 @property (copy) void (^zipEventHandler)(NSString*);

@@ -20,12 +20,14 @@
 
 @implementation ZipArchiveAdapter
 
-- (void)zip:(NSString *)path files:(NSArray<NSString *> *)files {
+- (void)zip:(NSString *)path files:(NSArray<NSString *> *)files maxSize:(float)maxSize {
 
     NSLog(@"[ZipArchive] ZIP path: %@", path);
+    NSLog(@"[ZipArchive] ZIP maxSize: %f", maxSize);
 
 //    + (BOOL)createZipFileAtPath:(NSString *)path withFilesAtPaths:(NSArray<NSString *> *)paths
-    BOOL success = [SSZipArchive createZipFileAtPath:path withFilesAtPaths:files];
+    int diskSize = (int) (maxSize * 1024 * 1024);
+    BOOL success = [SSZipArchive createZipFileAtPath:path withFilesAtPaths:files diskSize:diskSize];
     if (success) {
         NSLog(@"Success zip");
         self.zipEventHandler(path);

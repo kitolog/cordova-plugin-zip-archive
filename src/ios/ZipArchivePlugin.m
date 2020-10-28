@@ -28,6 +28,9 @@
     NSString *adapterKey = [command.arguments objectAtIndex:0];
     NSString *path = [command.arguments objectAtIndex:1];
     NSArray<NSString *> *files = [command.arguments objectAtIndex:2];
+    NSNumber *maxSizeNumber = [command.arguments objectAtIndex:3];
+    
+    float maxSize = [maxSizeNumber floatValue];
 
     NSLog(@"[ZipArchive] start %@", adapterKey);
     if (adapterInstances == nil) {
@@ -41,6 +44,7 @@
 
         [self->adapterInstances setObject:adapterInstance forKey:adapterKey];
 
+        [self removeAdapter:adapterKey];
         adapterInstance = nil;
     };
 
@@ -49,6 +53,8 @@
         [self.commandDelegate
          sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error]
          callbackId:command.callbackId];
+        [self removeAdapter:adapterKey];
+        adapterInstance = nil;
     };
 
     adapterInstance.errorEventHandler = ^ void (NSString *error, NSString *errorType){
@@ -59,6 +65,8 @@
         [errorDictionaryData setObject:adapterKey forKey:@"adapterKey"];
 
         [self dispatchEventWithDictionary:errorDictionaryData];
+        [self removeAdapter:adapterKey];
+        adapterInstance = nil;
     };
     adapterInstance.progressHandler = ^ void (NSNumber* data) {
         NSMutableDictionary *dataDictionary = [[NSMutableDictionary alloc] init];
@@ -76,13 +84,13 @@
         [closeDictionaryData setObject:adapterKey forKey:@"adapterKey"];
 
         [self dispatchEventWithDictionary:closeDictionaryData];
-
+        adapterInstance = nil;
         [self removeAdapter:adapterKey];
     };
 
     [self.commandDelegate runInBackground:^{
         @try {
-            [adapterInstance zip:path files:files];
+            [adapterInstance zip:path files:files maxSize:maxSize];
         }
         @catch (NSException *e) {
             [self.commandDelegate

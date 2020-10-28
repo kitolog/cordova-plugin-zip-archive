@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public interface ZipArchiveAdapter {
-	public void zip(String zipFile, ArrayList<String> files) throws IOException;
+	public void zip(String zipFile, ArrayList<String> files, float maxSize) throws IOException;
 //	public void zip(String zipFile, String[] files) throws IOException;
 	public void stop();
 	public void setZipEventHandler(Consumer<String> startEventHandler);
