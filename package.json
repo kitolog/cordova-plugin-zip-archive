@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-archive-zip",
   "version": "2.0.0",
-  "description": "Cordova Zip Archive Plugin",
+  "description": "Cordova Zip archive plugin with multipart support",
   "types": "./types/index.d.ts",
   "cordova": {
     "id": "cordova-plugin-archive-zip",
@@ -21,6 +21,7 @@
     "cordova",
     "zip",
     "archive",
+    "multipart",
     "ios zip",
     "android zip",
     "cordova zip",
