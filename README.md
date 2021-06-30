@@ -69,4 +69,4 @@ Establishes connection with the remote host.
  - 1.0.1 - cleared zip instances
  - 2.0.0 - added max file size and zip parts support, updated SSZipArchive version 
 
-Appelian, 2015
+Appelian, 2019
