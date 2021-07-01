@@ -26,8 +26,6 @@
     <repo>https://github.com/kitolog/cordova-plugin-zip-archive</repo>
     <issue>https://github.com/kitolog/cordova-plugin-zip-archive</issue>
 
-    <dependency id="cordova-plugin-cocoapod-support"/>
-
     <engines>
         <engine name="cordova-android" version=">=3.6.0"/><!-- Requires CordovaPlugin.preferences -->
         <engine name="cordova-ios" version=">=4.0.0"/>
@@ -65,7 +63,14 @@
         </config-file>
 
 <!--        <framework src="SSZipArchive" type="podspec" spec="~> 2.2.3" />-->
-        <pod name="SSZipArchive" git="https://github.com/kitolog/ZipArchive" branch="master" />
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git" />
+            </config>
+            <pods use-frameworks="true">
+                <pod name="SSZipArchive" git="https://github.com/kitolog/ZipArchive" branch="master" />
+            </pods>
+        </podspec>
 
         <header-file src="src/ios/ZipArchiveAdapter.h"/>
         <source-file src="src/ios/ZipArchiveAdapter.m"/>
